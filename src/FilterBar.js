@@ -1,12 +1,8 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
-import 'rc-datepicker/lib/style.css';
-import { DatePickerInput } from 'rc-datepicker';
 
 class FilterBar extends React.Component {
     render() {
-        const date = new Date();
-
         return (
           <Form>
             <Form.Group controlId="source">
@@ -21,10 +17,26 @@ class FilterBar extends React.Component {
                 <option value="securities">Securities</option>
               </Form.Control>
             </Form.Group>
-            <Form.Group controlId="effectiveDate">
-              <Form.Label>Effective Date</Form.Label>
-              <DatePickerInput value={date} />
-            </Form.Group>
+            <Form.Row>
+              <Form.Group controlId="effectiveDateDay" className="left-column">
+                <Form.Label>Effective Date</Form.Label>
+                <Form.Control as="select">
+                  <option value="28">28</option>
+                </Form.Control>
+              </Form.Group>
+              <Form.Group controlId="effectiveDateMonth" className="middle-column">
+                <Form.Label>&nbsp;</Form.Label>
+                <Form.Control as="select">
+                  <option value="03">March</option>
+                </Form.Control>
+              </Form.Group>
+              <Form.Group controlId="effectiveDateYear" className="right-column">
+                <Form.Label>&nbsp;</Form.Label>
+                <Form.Control as="select">
+                  <option value="2020">2020</option>
+                </Form.Control>
+              </Form.Group>
+            </Form.Row>
           </Form>
         )
     }
