@@ -6,15 +6,15 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh '''npm install
-npm run build'''
+        sh "npm install"
+        sh "npm run build"
       }
     }
 
     stage('Deploy') {
       steps {
-        sh "''aws s3 cp build/. s3://${params.s3bucketwebsite} --recursive
-aws s3 cp build/static/css/. s3://${params.s3bucketwebsite}/static/css --recursive --content-type ''text/css'' --metadata-directive REPLACE''"
+        sh "aws s3 cp build/. s3://${params.s3bucketwebsite} --recursive"
+        sh "aws s3 cp build/static/css/. s3://${params.s3bucketwebsite}/static/css --recursive --content-type ''text/css'' --metadata-directive REPLACE"
       }
     }
 
