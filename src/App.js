@@ -1,5 +1,5 @@
 import React from 'react';
-import FileCheckSection from './FileCheckSection';
+import FileCheckSection from './components/FileCheckSection';
 import data from './scd_securities.20200321';
 
 function App() {
