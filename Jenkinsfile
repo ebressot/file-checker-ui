@@ -11,6 +11,12 @@ pipeline {
       }
     }
 
+    stage('Test') {
+      steps {
+        sh "npm test"
+      }
+    }
+
     stage('Deploy') {
       steps {
         sh "aws s3 cp build/. s3://${params.s3bucketwebsite} --recursive"
