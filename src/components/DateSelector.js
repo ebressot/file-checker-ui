@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 
 import './DateSelector.css';
@@ -56,9 +57,6 @@ function YearOptions() {
 class DateSelector extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      date: new Date()
-    };
 
     this.handleEffectiveDateDayChange = this.handleEffectiveDateDayChange.bind(this);
     this.handleEffectiveDateMonthChange = this.handleEffectiveDateMonthChange.bind(this);
@@ -66,27 +64,28 @@ class DateSelector extends React.Component {
   }
 
   handleEffectiveDateDayChange(e) {
-    this.setState({
-      date: new Date(this.state.date.getFullYear(), this.state.date.getMonth(), e.target.value)
-    });
+    const date = this.props.effectiveDate;
+    const effectiveDate = new Date(date.getFullYear(), date.getMonth(), e.target.value);
+    this.props.onEffectiveDateChange(effectiveDate);
   }
 
   handleEffectiveDateMonthChange(e) {
-    this.setState({
-      date: new Date(this.state.date.getFullYear(), parseInt(e.target.value) - 1, getDayOfMonth(this.state.date.getFullYear(), parseInt(e.target.value) - 1, this.state.date.getDate()))
-    });
+    const date = this.props.effectiveDate;
+    const effectiveDate = new Date(date.getFullYear(), parseInt(e.target.value) - 1, getDayOfMonth(date.getFullYear(), parseInt(e.target.value) - 1, date.getDate()));
+    this.props.onEffectiveDateChange(effectiveDate);
   }
 
   handleEffectiveDateYearChange(e) {
-    this.setState({
-      date: new Date(e.target.value, this.state.date.getMonth(), getDayOfMonth(e.target.value, this.state.date.getMonth(), this.state.date.getDate()))
-    });
+    const date = this.props.effectiveDate;
+    const effectiveDate = new Date(e.target.value, date.getMonth(), getDayOfMonth(e.target.value, date.getMonth(), date.getDate()));
+    this.props.onEffectiveDateChange(effectiveDate);
   }
 
   render() {
-    const day = this.state.date.getDate();
+    const date = this.props.effectiveDate;
+    const day = date.getDate();
     const dayText = ((day < 10) ? "0" : "") + day;
-    const month = this.state.date.getMonth();
+    const month = date.getMonth();
     const monthText = ((month < 9) ? "0" : "") + (month + 1);
 
     return (
@@ -94,7 +93,7 @@ class DateSelector extends React.Component {
         <Form.Group controlId="effectiveDateDay" className="left-column">
           <Form.Label>Effective Date</Form.Label>
           <Form.Control as="select" onChange={this.handleEffectiveDateDayChange} value={dayText}>
-            <DayOptions date={this.state.date} />
+            <DayOptions date={date} />
           </Form.Control>
         </Form.Group>
         <Form.Group controlId="effectiveDateMonth" className="middle-column">
@@ -105,7 +104,7 @@ class DateSelector extends React.Component {
         </Form.Group>
         <Form.Group controlId="effectiveDateYear" className="right-column">
           <Form.Label>&nbsp;</Form.Label>
-          <Form.Control as="select" onChange={this.handleEffectiveDateYearChange} value={this.state.date.getFullYear()}>
+          <Form.Control as="select" onChange={this.handleEffectiveDateYearChange} value={date.getFullYear()}>
             <YearOptions />
           </Form.Control>
         </Form.Group>
@@ -113,5 +112,9 @@ class DateSelector extends React.Component {
     )
   }
 }
+DateSelector.propTypes = {
+  effectiveDate: PropTypes.object.isRequired,
+  onEffectiveDateChange: PropTypes.func.isRequired
+};
 
 export default DateSelector;
