@@ -1,3 +1,4 @@
+/* eslint-env jest */
 import React from 'react';
 import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
@@ -11,5 +12,5 @@ test('renders default page', () => {
     </Provider>
   );
 
-  expect(getByText(/New Records/i)).toBeInTheDocument();
+  expect(getByText(/Select file and click Check/i)).toBeInTheDocument();
 });
